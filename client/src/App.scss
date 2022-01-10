@@ -1,0 +1,39 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+@import './scss/_custom.scss';
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+html {
+	height: 100%;
+}
+body {
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+#footer-root {
+	margin-top: auto;
+}
+/* 
+.slick-prev::before,
+.slick-next::before {
+	color: black !important;
+} */
+
+.displayResponse {
+	animation: FadeIn 0.5s both ease-in-out;
+}
+
+@keyframes FadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

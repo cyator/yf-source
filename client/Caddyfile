@@ -1,0 +1,11 @@
+yotefresh.centralus.cloudapp.azure.com {
+    tls christiantheeone@gmail.com
+    root * /srv
+    route {
+        reverse_proxy /api* server:5000
+        reverse_proxy /auth* server:5000
+        reverse_proxy /stk* server:5000
+        try_files {path} {path}/ /index.html
+        file_server
+    } 
+}

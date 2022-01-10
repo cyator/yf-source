@@ -1,0 +1,44 @@
+name: Build Containers for Prod & Push to Dockerhub
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy-server:
+    name: Build and Deploy server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build & push Docker image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: cyator/yf-server
+          registry: docker.io
+          directory: server
+          dockerfile: server/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+  build-and-deploy-client:
+    name: Build and Deploy client
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build & push Docker image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: cyator/yf-client
+          registry: docker.io
+          directory: client
+          dockerfile: client/Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          buildArgs: BASE_URL=${{ secrets.BASE_URL}} , CADDYFILE=Caddyfile
